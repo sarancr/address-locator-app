@@ -1,0 +1,12 @@
+{
+  "name": "address-locator-app",
+  "version": "1.0.0",
+  "description": "Locate Physician Address on Map",
+  "main": "app.js",
+  "author": "Saranya Chithalandur Rajendran",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.15.4",
+    "fast-csv": "^2.4.0"
+  }
+}

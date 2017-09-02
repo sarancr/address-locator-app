@@ -1,0 +1,147 @@
+<html>
+
+<head>
+  <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCmpncTSCZMqHf9LRL6lZDCukIuxgIgM7I&callback=initMap"></script>
+  <script>
+    var map;
+    var marker;
+
+    function initMap() {
+      var uluru = {
+        lat: 37.5261526,
+        lng: -122.0501387
+      };
+      map = new google.maps.Map(document.getElementById('map'), {
+        zoom: 10,
+        center: uluru
+      });
+      marker = new google.maps.Marker({
+        map: map
+      });
+    }
+
+    function locate() {
+      var firstname = document.getElementById("firstname").value;
+      var middlename = document.getElementById("middlename").value;
+      var lastname = document.getElementById("lastname").value;
+      setProgress("Loading ...");
+      marker.setMap(null);
+
+
+      //Fetch Physician Adress
+      var xhttp = new XMLHttpRequest();
+      var queryParams = 'fname=' + firstname + '&mname=' + middlename + '&lname=' + lastname;
+      var url = '/address?' + queryParams + '&t=' + new Date().getMilliseconds();
+
+      xhttp.onreadystatechange = function () {
+        if (this.readyState === 4) {
+          if (this.status === 200)
+            fetchMap(this.responseText);
+          else if (this.status === 204)
+            setProgress('No Physician Match Found!');
+          else
+            setProgress('Sorry!, Unable to get physican address.');
+        }
+      };
+
+
+      xhttp.open("GET", url, true);
+      xhttp.setRequestHeader('Content-type', "application/x-www-form-urlencoded");
+      xhttp.send();
+    }
+
+    function updateMap(res) {
+      var uluru = {
+        lat: res.results[0].geometry.location.lat,
+        lng: res.results[0].geometry.location.lng
+      };
+
+      console.log(uluru);
+
+      var options = {
+        zoom: 12,
+        center: uluru
+      }
+
+      var markerOptions = {
+        position: uluru,
+        animation: google.maps.Animation.DROP,
+        map: map
+      }
+
+      map.setOptions(options);
+      marker.setOptions(markerOptions);
+    }
+
+
+    function fetchMap(address) {
+      var xhttp = new XMLHttpRequest();
+      xhttp.onreadystatechange = function () {
+        if (this.readyState === 4 && this.status === 200) {
+          console.log(this.responseText);
+          updateMap(JSON.parse(this.responseText));
+          setProgress("");
+        }
+      };
+      var url = "http://maps.googleapis.com/maps/api/geocode/json?address=" + address + "&sensor=false"
+      xhttp.open("GET", url, true);
+      xhttp.send();
+    }
+
+    function setProgress(status) {
+      document.getElementById("progress").innerText = status;
+    }
+  </script>
+  <style>
+    #map {
+      height: 85%;
+      width: 100%;
+    }
+
+    #input-form {
+      margin-bottom: 10px;
+    }
+
+    #input-form>* {
+      margin-right: 5px;
+    }
+
+    #input-form>input {
+      height: 30px;
+      padding: 5px;
+      line-height: 30px;
+    }
+
+    #input-form>button {
+      background-color: #4CAF50;
+      /* Green */
+      border: none;
+      color: white;
+      font-weight: bold;
+      padding: 6px 22px;
+      text-align: center;
+      text-decoration: none;
+      display: inline-block;
+      font-size: 16px;
+    }
+
+    #progress {
+      font-weight: bold;
+      color: #ffa500;
+    }
+  </style>
+</head>
+
+<body>
+  <h2>Physician Locator</h2>
+  <div id="input-form">
+    <input type="text" id="firstname" placeholder="First Name">
+    <input type="text" id="middlename" placeholder="Middle Name">
+    <input type="text" id="lastname" placeholder="Last Name">
+    <button type="button" onclick="locate()">Locate</button>
+    <span id="progress"></span>
+  </div>
+  <div id="map"></div>
+</body>
+
+</html>
