@@ -24,9 +24,9 @@ FirstName  MiddleName LastName
 Kirk	Alan	Kaiser
 Brett	Gordon	Menmuir
 Rafael		Neiman
-Timothy	James	O'Mara
-Renny	Ravinder-Singh	Uppal
-Renny	Ravinder-Singh	Uppal
+John	William	Staeheli
+Michael	J	Bosse
+Thomas	M	Large
 Alan	T	Kawaguchi
 Michael		Handy
 Steven	H	Ryder
