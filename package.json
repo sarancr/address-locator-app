@@ -5,6 +5,9 @@
   "main": "app.js",
   "author": "Saranya Chithalandur Rajendran",
   "license": "MIT",
+  "scripts": {
+    "start": "node app"
+  },
   "dependencies": {
     "express": "^4.15.4",
     "fast-csv": "^2.4.0"
