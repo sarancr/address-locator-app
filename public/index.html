@@ -6,7 +6,10 @@
     var map;
     var marker;
 
+    //Initialize Google Map
     function initMap() {
+
+      // Default location
       var uluru = {
         lat: 37.5261526,
         lng: -122.0501387
@@ -20,6 +23,7 @@
       });
     }
 
+    // Locate the address for the given input
     function locate() {
       var firstname = document.getElementById("firstname").value;
       var middlename = document.getElementById("middlename").value;
@@ -50,6 +54,7 @@
       xhttp.send();
     }
 
+    // Update the map now
     function updateMap(res) {
       var uluru = {
         lat: res.results[0].geometry.location.lat,
@@ -59,7 +64,7 @@
       console.log(uluru);
 
       var options = {
-        zoom: 12,
+        zoom: 13,
         center: uluru
       }
 
@@ -74,6 +79,7 @@
     }
 
 
+    // Find out map location for given address
     function fetchMap(address) {
       var xhttp = new XMLHttpRequest();
       xhttp.onreadystatechange = function () {

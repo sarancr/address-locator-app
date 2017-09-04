@@ -1,13 +1,15 @@
 const express = require("express");
 const path = require("path");
-var csv = require("fast-csv");
+const csv = require("fast-csv");
 const app = express();
 
 //Set static path
 app.use(express.static(path.join(__dirname, "public")));
 
-var physicianData = [];
+// Holds physician data
+const physicianData = [];
 
+// Read CSV file and push it array
 csv.fromPath("data/OP_DTL_OWNRSHP_PGYR2016_P06302017.csv")
   .on("data", function(data) {
     // console.log(data);
@@ -22,12 +24,16 @@ function compare(str1, str2){
     return str1 != null && str2!= null && str1.toLocaleLowerCase() === str2.toLocaleLowerCase();
 }
 
+// API Route
 app.get("/address", (req, res) => {
+
+  // Read query params
   const fname = req.query.fname;
   const mname = req.query.mname;
   const lname = req.query.lname;
   console.log(fname + " " + mname + "  " + lname);
 
+  // Identify matching records
   var result = null;
   for (var i = 0; i < physicianData.length; i++) {
     var row = physicianData[i];
