@@ -15,7 +15,7 @@ Developed a nodejs application which has API and client code
  - When new request comes to API /address with physician first name, middle name, last name, it finds the address in array and responds back to the client.
 
 ### Client
- - Client code has been placed under public/index.html
+ - Client code has been available in public/index.html
  - Developed using HTML, CSS, JavaScript, AJAX, and Google MAPS API
  - Client code calls server API /address to find out the physician address by sending First Name, Middle Name, Last Name.
 
