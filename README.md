@@ -20,7 +20,7 @@ Developed a nodejs application which has API and client code
 
 ## Test Data
 ```sh
-First Name  Middle Name Last Name
+FirstName  MiddleName LastName
 Kirk	Alan	Kaiser
 Brett	Gordon	Menmuir
 Rafael		Neiman
