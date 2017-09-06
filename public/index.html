@@ -56,6 +56,7 @@
 
     // Update the map now
     function updateMap(res) {
+
       var uluru = {
         lat: res.results[0].geometry.location.lat,
         lng: res.results[0].geometry.location.lng
@@ -83,10 +84,21 @@
     function fetchMap(address) {
       var xhttp = new XMLHttpRequest();
       xhttp.onreadystatechange = function () {
-        if (this.readyState === 4 && this.status === 200) {
-          console.log(this.responseText);
-          updateMap(JSON.parse(this.responseText));
-          setProgress("");
+        if (this.readyState === 4) {
+          if (this.status === 200) {
+            var res = JSON.parse(this.responseText);
+            console.log(res);
+            setProgress("");
+            if (!res.results || res.results === null || res.results.length <= 0) {
+              setProgress("No matching location for " + address);
+              return;
+            } else {
+              updateMap(JSON.parse(this.responseText));
+            }
+          } else {
+            setProgress("SERVER ERROR : Sorry!, Unable to get the location!");
+            consol.log(this.statusText);
+          }
         }
       };
       var url = "https://maps.googleapis.com/maps/api/geocode/json?address=" + address + "&sensor=false"
